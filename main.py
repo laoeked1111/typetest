@@ -33,7 +33,20 @@ def main():
         curses.wrapper(init, 1, target)
     
     elif test_type == "2":
-        raise NotImplementedError
+        time_limit = 0
+        while time_limit <= 0:
+            prompt = "Enter the time limit in seconds, or hit enter for default (30): "
+            response = input(prompt)
+
+            if not response:
+                time_limit = 30
+                break
+            
+            try:
+                time_limit = int(response)
+            except:
+                time_limit = 0
+        curses.wrapper(init, 2, time_limit)
 
 
 def init(stdscr, *args) -> None:
@@ -60,6 +73,8 @@ def init(stdscr, *args) -> None:
     # finite test
     if args[0] == 1:
         finite_test(stdscr, args[1])
+    elif args[0] == 2:
+        continuous_test(stdscr, args[1])
 
 if __name__ == "__main__":
     main()
