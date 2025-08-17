@@ -1,3 +1,0 @@
-
-trainer_active = False
-
