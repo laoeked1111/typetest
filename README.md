@@ -1,6 +1,6 @@
 # typetrainer-private
 
-This is a type test made in Python. 
+This is a type test made in Python. Gives the raw and actual WPM, accuracy, and consistency.
 
 ## Usage
 

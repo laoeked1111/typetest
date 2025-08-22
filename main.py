@@ -1,14 +1,13 @@
 
 import curses
 
-from typing_test import finite_test, continuous_test
 from text import generate_text
+from typing_test import test
 
 def main():
     """
     Entry point.
     """
-
     prompt = "Welcome to the type trainer! Select your test type:\n[1] Finite\n[2] Continuous Timed\n"
     test_type = input(prompt)
 
@@ -28,7 +27,7 @@ def main():
             try:
                 num_words = int(response)
             except:
-                num_words = 0
+                pass
         target = generate_text(num_words)
         curses.wrapper(init, 1, target)
     
@@ -45,9 +44,8 @@ def main():
             try:
                 time_limit = int(response)
             except:
-                time_limit = 0
+                pass
         curses.wrapper(init, 2, time_limit)
-
 
 def init(stdscr, *args) -> None:
     """
@@ -61,7 +59,6 @@ def init(stdscr, *args) -> None:
     Ret:
         None 
     """
-
     curses.start_color()
     curses.noecho()
     stdscr.keypad(True)
@@ -70,11 +67,15 @@ def init(stdscr, *args) -> None:
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
 
+    finite, continuous = test(stdscr)
+
     # finite test
     if args[0] == 1:
-        finite_test(stdscr, args[1])
+        finite(args[1])
+
+    # continuous test
     elif args[0] == 2:
-        continuous_test(stdscr, args[1])
+        continuous(args[1])
 
 if __name__ == "__main__":
     main()
