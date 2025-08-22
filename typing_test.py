@@ -140,6 +140,10 @@ def test(stdscr):
         setup(intro_msg, target_text_1, target_text_2)
 
         while start is None or time.time() - start < time_limit:
+            if len(typed_chars) >= len(target_text_1):
+                target_text_1 = target_text_2
+                target_text_2 = " ".join(generate_text(10)) + " "
+                typed_chars = []
             update(target_text_1, target_text_2)
 
         print_metrics(num_typed, num_incorrect, time_limit, timestamps)
