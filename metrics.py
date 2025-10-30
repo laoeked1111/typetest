@@ -1,3 +1,6 @@
+"""
+Determine typing quality metrics.
+"""
 
 import statistics
 from colorama import Fore, Style
@@ -36,7 +39,7 @@ def get_consistency(timestamps: list[float], tolerance=0.7) -> float:
         tolerance (float) - a number that allows mapping b/w CV and consistency
     Ret:
         consistency (float) - a decimal representing the consistency
-    """ 
+    """
 
     # too short
     if len(timestamps) < 2:
@@ -78,7 +81,8 @@ def print_metrics(num_typed:int, num_incorrect:int, elapsed_time:float, timestam
     print("Your raw WPM was " + Fore.GREEN + f"{raw_wpm}" + Style.RESET_ALL + ".")
     print("Your actual WPM was " + Fore.GREEN + f"{actual_wpm}" + Style.RESET_ALL + ".")
     print("Your accuracy was " + Fore.GREEN + f"{accuracy}%" + Style.RESET_ALL + ".")
-    print("Your consistency was " + Fore.GREEN + f"{100 * consistency:.2f}%" + Style.RESET_ALL + ".")
+    print("Your consistency was " + Fore.GREEN +
+          f"{100 * consistency:.2f}%" + Style.RESET_ALL + ".")
 
 if __name__ == "__main__":
     pass

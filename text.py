@@ -1,3 +1,6 @@
+"""
+Generate text for type tests.
+"""
 
 import random
 
@@ -11,8 +14,8 @@ def generate_text(num_words: int) -> list[str]:
         a list of num_words strings (words)
     """
 
-    file = open("5000-more-common.txt", 'r')
-    text = [s.strip() for s in file.readlines()]
+    with open("5000-more-common.txt", encoding="utf-8") as file:
+        text = [s.strip() for s in file.readlines()]
 
     return random.sample(text, num_words)
 

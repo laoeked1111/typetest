@@ -1,50 +1,63 @@
+"""
+Terminal-based type tester.
+"""
 
-import curses
+try:
+    import curses
+except ImportError as e:
+    raise ImportError("curses library not available. On Windows systems," \
+    " run:\npip install -r requirements.txt") from e
 
 from text import generate_text
 from typing_test import test
 
-def main():
+def main() -> None:
     """
     Entry point.
     """
-    prompt = "Welcome to the type trainer! Select your test type:\n[1] Finite\n[2] Continuous Timed\n"
+    prompt = "Welcome to the type trainer! " \
+        "Select your test type:\n[1] Finite\n[2] Continuous Timed\n"
     test_type = input(prompt)
 
+    # require valid input
     while test_type not in ("1", "2"):
         test_type = input(prompt)
 
+    # finite test
     if test_type == "1":
         num_words = 0
-        while num_words <= 0:
+
+        # get number of words to use
+        while not num_words:
             prompt = "Enter the number of words to use, or hit enter for default (10): "
             response = input(prompt)
-
             if not response:
                 num_words = 10
                 break
-
             try:
                 num_words = int(response)
-            except:
+            except ValueError:
                 pass
+
         target = generate_text(num_words)
         curses.wrapper(init, 1, target)
-    
+
+    # continuous test
     elif test_type == "2":
         time_limit = 0
+
+        # get time limit
         while time_limit <= 0:
             prompt = "Enter the time limit in seconds, or hit enter for default (30): "
             response = input(prompt)
-
             if not response:
                 time_limit = 30
                 break
-            
             try:
                 time_limit = int(response)
-            except:
+            except ValueError:
                 pass
+
         curses.wrapper(init, 2, time_limit)
 
 def init(stdscr, *args) -> None:
@@ -63,7 +76,7 @@ def init(stdscr, *args) -> None:
     curses.noecho()
     stdscr.keypad(True)
 
-     # green for correct, red for incorrect, white for not done 
+     # green for correct, red for incorrect, white for not done
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
 
